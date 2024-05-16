@@ -1,4 +1,4 @@
-# petcenter
+# petCenter
 
 > A Vue.js project
 

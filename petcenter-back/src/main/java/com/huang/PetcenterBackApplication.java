@@ -9,7 +9,7 @@ public class PetcenterBackApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(PetcenterBackApplication.class, args);
-       
+        System.out.println("git");
     }
 
 }
