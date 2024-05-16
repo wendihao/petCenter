@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huang.dao.AdminMapper">
+    <resultMap id="AdminResult" type="com.huang.entity.Admin">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+        <result property="sex" column="sex"/>
+        <result property="name" column="name"/>
+        <result property="phoneid" column="phoneid"/>
+        <result property="portrait" column="portrait"/>
+    </resultMap>
+    <insert id="insertAdmin">
+        insert into petcenter.admin (name, sex, phoneid, email, username, password,portrait)
+        VALUES (#{name},#{sex,},#{phoneid},#{email},#{username},#{password},#{portrait})
+    </insert>
+    <select id="queryAdmin" resultType="java.lang.Integer" parameterType="string">
+        select id from petcenter.admin where username = #{username}
+    </select>
+    <select id="queryAdminById" resultType="com.huang.entity.Admin">
+        select * from petcenter.admin where id = #{id}
+    </select>
+    <select id="queryAdminByUserName" resultType="com.huang.entity.Admin">
+        select * from petcenter.admin where username = #{username}
+    </select>
+</mapper>

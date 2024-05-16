@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huang.dao.XunWuMapper">
+    <resultMap id="MessageResultMap" type="com.huang.entity.XunWu">
+        <id property="id" column="id"/>
+        <result property="varieties" column="varieties"/>
+        <result property="address" column="address"/>
+        <result property="introduce" column="introduce"/>
+        <result property="images" column="images"/>
+        <result property="time" column="time"/>
+        <result property="userId" column="user_id"/>
+        <result property="schedule" column="schedule"/>
+        <result property="success" column="success"/>
+        <result property="uuid" column="uuid"/>
+    </resultMap>
+    <insert id="insertXunWu" parameterType="com.huang.entity.XunWu">
+        insert into petcenter.xunwu(varieties,address,introduce,images,time,user_id,schedule,success,uuid) values (#{varieties},#{address},#{introduce},#{images},#{time},#{userId},#{schedule},#{success},#{uuid})
+    </insert>
+    <update id="updateXunWuByUuid">
+        update petcenter.xunwu set schedule = 1 where uuid = #{animalId}
+    </update>
+    <update id="updateXunWuByUuid1">
+        update petcenter.xunwu set varieties = #{varieties} , address =#{address}, time=#{datetime},introduce=#{introduce},images = #{images} where uuid = #{uuid}
+    </update>
+    <select id="selectXunWu" resultType="com.huang.entity.XunWu">
+        select * from petcenter.xunwu where schedule = 1
+    </select>
+    <select id="queryXunWuPage" resultType="com.huang.entity.XunWu">
+        select * from petcenter.xunwu ${ew.customSqlSegment}
+    </select>
+    <select id="queryXunWuById" resultType="com.huang.entity.XunWu">
+        select * from petcenter.xunwu where id = #{id}
+    </select>
+    <select id="queryXunWuByUuid" resultType="com.huang.entity.XunWu">
+        select * from  petcenter.xunwu where uuid =#{animalId}
+    </select>
+    <select id="queryAllXunWu" resultType="com.huang.entity.XunWu">
+        select * from xunwu where schedule = 1
+    </select>
+    <select id="queryAllXunWuByAddress" resultType="com.huang.entity.XunWu">
+        select * from xunwu where address like  #{address}
+    </select>
+</mapper>
+

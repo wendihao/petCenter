@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huang.dao.JuBaoMapper">
+    <resultMap id="JuBaoResult" type="com.huang.entity.JuBao">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="reason" column="reason"/>
+        <result property="images" column="images"/>
+        <result property="time" column="time"/>
+        <result property="jubaoId" column="jubao_id"/>
+        <result property="jubaousername" column="jubaousername"/>
+    </resultMap>
+    <insert id="insertJuBao">
+        insert into petcenter.jubao(username,reason,images,time,jubao_id,jubaousername)
+        values (#{username},#{reason},#{images},#{time},#{jubaoId},#{jubaousername})
+    </insert>
+    <delete id="deleteJuBaoById">
+        delete from jubao where id =#{id}
+    </delete>
+    <select id="querryAllJuBao" resultType="com.huang.entity.JuBao">
+        select * from petcenter.jubao
+    </select>
+    <select id="queryJuBaoById" resultType="com.huang.entity.JuBao">
+        select * from petcenter.jubao where id = #{id}
+    </select>
+</mapper>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huang.dao.HomeLessPetMapper">
+    <resultMap id="HomLessPetResultMap" type="com.huang.entity.HomeLessPet">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="introduce" column="introduce"/>
+        <result property="address" column="address"/>
+        <result property="images" column="images"/>
+        <result property="varieties" column="varieties"/>
+        <result property="time" column="time"/>
+        <result property="userId" column="user_id"/>
+        <result property="schedule" column="schedule"/>
+        <result property="petrenling" column="petrenling"/>
+        <result property="renlingId" column="renling_id"/>
+        <result property="uuid" column="uuid"/>
+        <association property="user" javaType="com.huang.entity.User">
+            <id property="id" column="id"/>
+            <result property="username" column="username"/>
+            <result property="password" column="password"/>
+            <result property="email" column="email"/>
+            <result property="sex" column="sex"/>
+            <result property="name" column="name"/>
+            <result property="phoneid" column="phoneid"/>
+            <result property="portrait" column="portrait"/>
+        </association>
+    </resultMap>
+    <insert id="saveHomelessPet" parameterType="com.huang.entity.HomeLessPet">
+        insert into petcenter.homelesspet (varieties,introduce,address, images,time,user_id,schedule,uuid,petrenling,title)
+        VALUES (#{varieties},#{introduce},#{address},#{images},#{time},#{userId},#{schedule},#{uuid},#{petrenling},#{title})
+    </insert>
+    <update id="updateHomelessPetByUuid">
+        update petcenter.homelesspet set schedule = 1 where uuid = #{animalId}
+    </update>
+    <update id="updateHomelesspet">
+        update petcenter.homelesspet set title=#{title},introduce=#{introduce},address=#{address},images=#{images},
+        petrenling=#{petrenling},varieties=#{varieties},time=#{time},renling_id=#{renlingId} where id =#{id}
+    </update>
+    <update id="updateHomelesspet1">
+        update petcenter.homelesspet set renling_id = #{renlingId} where id = #{homelesspetId}
+    </update>
+    <update id="updateHomelessPetByUuid1">
+        update petcenter.homelesspet set title = #{title},varieties = #{varieties},address=#{address},time=#{datetime},introduce=#{introduce},images=#{images} where uuid=#{uuid}
+    </update>
+    <select id="queryHomeLessPetPage" resultType="com.huang.entity.HomeLessPet">
+        select * from petcenter.homelesspet ${ew.customSqlSegment}
+    </select>
+    <select id="selectHomelessPet" resultType="com.huang.entity.HomeLessPet">
+        select * from petcenter.homelesspet where schedule = 1
+    </select>
+    <select id="queryHomeLessPetById" resultType="com.huang.entity.HomeLessPet">
+        select * from petcenter.homelesspet where id = #{id}
+    </select>
+    <select id="querrHomeLessPet" resultType="com.huang.entity.HomeLessPet">
+        select * from petcenter.homelesspet where id = #{homelesspetId} and user_id = #{renlingId}
+    </select>
+    <select id="querrHomeLessPetByUuid" resultType="com.huang.entity.HomeLessPet">
+        select * from petcenter.homelesspet where uuid = #{animalId}
+    </select>
+    <select id="queryAllZhaoLing" resultType="com.huang.entity.HomeLessPet">
+        select * from homelesspet where schedule = 1
+    </select>
+    <select id="findAllHomelessPetByUserId" resultType="com.huang.entity.HomeLessPet">
+        select * from homelesspet where user_id = #{userId}
+    </select>
+    <select id="findAllHomelessPetByRenLingId" resultType="com.huang.entity.HomeLessPet">
+        select * from homelesspet where renling_id = #{renlingId}
+    </select>
+    <select id="getZhaoLingNumByUserId" resultType="com.huang.entity.HomeLessPet">
+        select * from homelesspet where user_id = #{Id}
+    </select>
+    <select id="getZhaoHuiNumByRenLingId" resultType="com.huang.entity.HomeLessPet">
+        select * from homelesspet where renling_id = #{Id}
+    </select>
+    <select id="queryAllZhaoLingByAddress" resultType="com.huang.entity.HomeLessPet">
+        select * from homelesspet where address like #{address}
+    </select>
+</mapper>
+

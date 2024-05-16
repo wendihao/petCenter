@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huang.dao.UploadMapper">
+    <resultMap id="UploadResultMap" type="com.huang.entity.Upload">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="varieties" column="varieties"/>
+        <result property="category" column="category"/>
+        <result property="images" column="images"/>
+        <result property="time" column="time"/>
+        <result property="introduce" column="introduce"/>
+        <result property="animalId" column="animal_id"/>
+        <result property="success" column="success"/>
+    </resultMap>
+    <insert id="saveUpload">
+        insert into  petcenter.upload (user_id, username,varieties, category, images, time, introduce,animal_id,success)
+        values (#{userId},#{username},#{varieties},#{category},#{images},#{time},#{introduce},#{animalId},#{success})
+    </insert>
+    <update id="updateByUuid">
+        update petcenter.upload set success = 1 where animal_id = #{animalId}
+    </update>
+    <update id="updateUpload">
+        update petcenter.upload set introduce = #{introduce},varieties = #{varieties} ,images=#{images} where animal_id =#{animalId}
+    </update>
+    <delete id="deleteUploadById">
+        delete from upload where id = #{id}
+    </delete>
+    <select id="queryUpload" resultType="com.huang.entity.Upload">
+        select * from petcenter.upload ${ew.customSqlSegment}
+    </select>
+    <select id="qureyUploadById" resultType="com.huang.entity.Upload">
+        select * from petcenter.upload where id = #{id}
+    </select>
+    <select id="qureyUploadByAnimalId" resultType="com.huang.entity.Upload">
+        select * from petcenter.upload where animal_id = #{uuid}
+    </select>
+    <select id="qureyUploadByUserId" resultType="com.huang.entity.Upload">
+        select * from petcenter.upload where user_id = #{userId}
+    </select>
+
+</mapper>
+

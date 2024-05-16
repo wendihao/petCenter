@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huang.dao.PetBlogMapper">
+    <resultMap id="PetBlogResultMap" type="com.huang.entity.PetBlog">
+        <id property="id" column="id"/>
+        <result property="introduce" column="introduce"/>
+        <result property="images" column="images"/>
+        <result property="title" column="title"/>
+        <result property="time" column="time"/>
+        <result property="pageview" column="pageview"/>
+        <result property="comment" column="comment"/>
+        <result property="userId" column="user_id"/>
+        <association property="user" javaType="com.huang.entity.User">
+            <id property="id" column="id"/>
+            <result property="username" column="username"/>
+            <result property="password" column="password"/>
+            <result property="email" column="email"/>
+            <result property="sex" column="sex"/>
+            <result property="name" column="name"/>
+            <result property="phoneid" column="phoneid"/>
+            <result property="portrait" column="portrait"/>
+        </association>
+    </resultMap>
+    <insert id="insertPetBlog" parameterType="com.huang.entity.PetBlog">
+        insert into petcenter.pet_blog (title, introduce, images, user_id,time,pageview,comment)
+        values (#{title},#{introduce},#{images},#{userId},#{time},#{pageview},#{comment})
+    </insert>
+    <update id="updatePageView">
+        update petcenter.pet_blog set pageview = #{pageview} where id = #{id}
+    </update>
+    <update id="updateComment">
+        update petcenter.pet_blog set comment = #{comment} where id = #{id}
+    </update>
+    <update id="updatepetBlogById">
+        update petcenter.pet_blog set petcenter.pet_blog.title = #{title} , images = #{images}, introduce = #{introduce} where id =#{id}
+    </update>
+    <delete id="deletePetCircleById">
+        delete from petcenter.pet_blog where id = #{id}
+    </delete>
+    <!--    <select id="querryAll" resultType="com.huang.entity.PetBlog" resultMap="PetBlogResultMap">-->
+<!--        select * from petcenter.pet_blog left join petcenter.user on user_id = user.id-->
+<!--    </select>-->
+    <select id="querryById" resultType="com.huang.entity.PetBlog" resultMap="PetBlogResultMap">
+        select * from petcenter.pet_blog left join petcenter.user on user_id = user.id where pet_blog.id = #{id}
+    </select>
+<!--    <select id="selectMyPetBlog" resultType="com.huang.entity.PetBlog" resultMap="PetBlogResultMap">-->
+<!--        select p.*,u.name-->
+<!--        from petcenter.pet_blog p,petcenter.user u-->
+<!--        where p.user_id = u.id-->
+<!--    </select>-->
+    <select id="selectMyPetBlog" resultType="com.huang.entity.PetBlog" resultMap="PetBlogResultMap">
+        select * from petcenter.pet_blog left join petcenter.user on user_id = user.id
+    </select>
+    <select id="querryNumberById" resultType="java.lang.Integer">
+        select comment from petcenter.pet_blog where id = #{id}
+    </select>
+    <select id="querryAll" resultType="com.huang.entity.PetBlog" resultMap="PetBlogResultMap">
+        select * from petcenter.pet_blog where user_id = #{userId}
+    </select>
+    <select id="querryAllpetBlog" resultType="com.huang.entity.PetBlog">
+        select * from petcenter.pet_blog ${ew.customSqlSegment}
+    </select>
+    <select id="querrypetBlogById" resultType="com.huang.entity.PetBlog">
+        select * from petcenter.pet_blog where id = #{id}
+    </select>
+    <select id="querryAllpetBlog1" resultType="com.huang.entity.PetBlog">
+        select * from petcenter.pet_blog${ew.customSqlSegment}
+    </select>
+    <select id="querryAllPetCircle" resultType="com.huang.entity.PetBlog" resultMap="PetBlogResultMap">
+        select * from petcenter.pet_blog left join petcenter.user on user_id = user.id
+    </select>
+    <select id="querrypetBlogByUserId" resultType="com.huang.entity.PetBlog">
+        select * from petcenter.pet_blog where user_id = #{userId}
+    </select>
+
+</mapper>

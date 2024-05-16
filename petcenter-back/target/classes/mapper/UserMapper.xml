@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huang.dao.UserMapper">
+    <resultMap id="UserResult" type="com.huang.entity.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+        <result property="sex" column="sex"/>
+        <result property="name" column="name"/>
+        <result property="phoneid" column="phoneid"/>
+        <result property="portrait" column="portrait"/>
+        <result property="status" column="status"/>
+        <collection property="blogs" ofType="com.huang.entity.Blog" resultMap="BlogResult"/>
+        <collection property="petBlogs" ofType="com.huang.entity.PetBlog" resultMap="PetBlogResult"/>
+    </resultMap>
+    <resultMap id="BlogResult" type="com.huang.entity.Blog">
+        <id property="id" column="id"/>
+        <result property="varieties" column="varieties"/>
+        <result property="address" column="address"/>
+        <result property="petsex" column="petsex"/>
+        <result property="petname" column="petname"/>
+        <result property="petage" column="petage"/>
+        <result property="petadopt" column="petadopt"/>
+        <result property="free" column="free"/>
+        <result property="title" column="title"/>
+        <result property="time" column="time"/>
+        <result property="introduce" column="introduce"/>
+        <result property="images" column="images"/>
+        <result property="userId" column="user_id"/>
+    </resultMap>
+    <resultMap id="PetBlogResult" type="com.huang.entity.PetBlog">
+        <id property="id" column="id"/>
+        <result property="images" column="images"/>
+        <result property="introduce" column="introduce"/>
+        <result property="title" column="title"/>
+        <result property="userId" column="userId"/>
+    </resultMap>
+    <insert id="saveUser" parameterType="com.huang.entity.User">
+        insert into petcenter.user (name, sex, phoneid, email, username, password,portrait,status)
+        VALUES (#{name},#{sex,},#{phoneid},#{email},#{username},#{password},#{portrait},#{status})
+    </insert>
+    <update id="updateUserById">
+        update petcenter.user set username=#{username},password=#{password},email=#{email},sex=#{sex},name=#{name},
+        phoneid=#{phoneid},portrait=#{portrait} where id=#{id}
+    </update>
+    <update id="updateStatusById">
+            update petcenter.user set status = 1 where id = #{id}
+    </update>
+    <update id="updateStatusById1">
+        update petcenter.user set status = 0 where id = #{id}
+    </update>
+    <delete id="deleteUserById">
+        delete from user where id = #{id}
+    </delete>
+    <select id="queryUser" resultType="java.lang.Integer" parameterType="string">
+        select id from petcenter.user where user.username = #{username}
+    </select>
+    <select id="queryAllById" parameterType="integer" resultType="com.huang.entity.User" resultMap="UserResult">
+        select user.* ,
+        blog.id as bid,blog.varieties,blog.petsex,blog.petname,blog.petage,blog.petadopt,blog.free,blog.title,blog.address,blog.introduce,blog.images,blog.user_id
+        from petcenter.user left join petcenter.blog on user.id = blog.user_id where user.id = #{id}
+    </select>
+    <select id="queryUserById" resultType="com.huang.entity.User" parameterType="integer">
+        select * from petcenter.user where user.id = #{id}
+    </select>
+    <select id="queryUserByUserName" resultMap="UserResult">
+        select * from petcenter.user where user.username = #{username}
+    </select>
+    <select id="queryUserByName" resultType="com.huang.entity.User">
+        select * from petcenter.user where user.name = #{name}
+    </select>
+    <select id="queryAllByUserName" resultType="com.huang.entity.User" resultMap="UserResult">
+        select user.* ,
+        blog.id as bid,blog.varieties,blog.petsex,blog.petname,blog.petage,blog.petadopt,blog.free,blog.title,blog.address,blog.introduce,blog.images,blog.user_id
+        from petcenter.user left join petcenter.blog on user.id = blog.user_id where user.username = #{username}
+    </select>
+    <select id="queryAllUser" resultType="com.huang.entity.User">
+        select * from petcenter.user${ew.customSqlSegment}
+    </select>
+</mapper>

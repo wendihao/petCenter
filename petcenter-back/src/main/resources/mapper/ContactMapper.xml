@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huang.dao.ContactMapper">
+    <resultMap id="ContactResultMap" type="com.huang.entity.Contact">
+        <id property="id" column="id"/>
+        <result property="fromname" column="fromname"/>
+        <result property="toname" column="toname"/>
+        <result property="portrait" column="portrait"/>
+        <result property="msg" column="msg"/>
+        <result property="status" column="status"/>
+        <result property="from_id" column="from_id"/>
+        <result property="to_id" column="to_id"/>
+    </resultMap>
+    <insert id="insertContact" parameterType="com.huang.entity.Contact">
+        insert into petcenter.contact(fromname,toname,portrait,msg,status,from_id,to_id) values (#{fromname},#{toname},#{portrait},#{msg},#{status},#{from_id},#{to_id})
+    </insert>
+    <update id="updateContact">
+        update petcenter.contact set status = 1 where toname = #{toname} and fromname = #{fromname}
+    </update>
+    <update id="updateContactByUserId">
+        update petcenter.contact set fromname = #{fromname} , portrait = #{portrait} where from_id = #{user_id}
+    </update>
+    <update id="updateContactByUserId1">
+        update petcenter.contact set toname = #{fromname}  where to_id = #{user_id}
+    </update>
+    <select id="findAllContact" resultType="com.huang.entity.Contact">
+        select * from petcenter.contact where (fromname = #{fromname} and toname = #{toname}) or (fromname = #{toname} and toname = #{fromname})
+    </select>
+    <select id="findAllContactByToName" resultType="com.huang.entity.Contact">
+        select * from petcenter.contact where toname = #{toname}
+    </select>
+    <select id="findAllContactByToName1" resultType="com.huang.entity.Contact">
+        select * from petcenter.contact where toname = #{toname} and status = 0
+    </select>
+    <select id="findAllContactByToName2" resultType="com.huang.entity.Contact">
+        select * from petcenter.contact where toname = #{toname} and fromname = #{fromname} and status = 0
+    </select>
+</mapper>
+

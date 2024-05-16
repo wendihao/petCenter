@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huang.dao.RenLingMapper">
+    <resultMap id="RenLingResultMap" type="com.huang.entity.RenLing">
+        <id property="id" column="id"/>
+        <result property="address" column="address"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <result property="condit" column="condit"/>
+        <result property="homelesspettitle" column="homelesspettitle"/>
+        <result property="homelesspetId" column="homelesspet_id"/>
+        <result property="phoneId" column="phone_id"/>
+        <result property="qqId" column="qq_id"/>
+        <result property="wechatId" column="wechat_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="renlingId" column="renling_id"/>
+        <result property="success" column="success"/>
+        <association property="user" javaType="com.huang.entity.User">
+            <id property="id" column="id"/>
+            <result property="username" column="username"/>
+            <result property="password" column="password"/>
+            <result property="email" column="email"/>
+            <result property="sex" column="sex"/>
+            <result property="name" column="name"/>
+            <result property="phoneid" column="phoneid"/>
+            <result property="portrait" column="portrait"/>
+        </association>
+    </resultMap>
+    <insert id="insertRenling" parameterType="com.huang.entity.RenLing">
+        insert into petcenter.renling(name,address,email,phone_id,qq_id,wechat_id,homelesspettitle,condit,homelesspet_id,user_id,renling_id,success,time)
+        values (#{name},#{address},#{email},#{phoneId},#{qqId},#{wechatId},#{homelesspettitle},#{condit},#{homelesspetId},#{userId},#{renlingId},#{success},#{time})
+    </insert>
+    <update id="updateRenling">
+        update petcenter.renling set success = #{success} ,time = #{time}  where homelesspet_id = #{homelesspetId}
+    </update>
+    <delete id="deleteRenlingById">
+        delete from petcenter.renling where id =#{id}
+    </delete>
+    <select id="querryRenlingByUserId" resultType="com.huang.entity.RenLing">
+        select * from petcenter.renling where user_id = #{userId}
+    </select>
+    <select id="queryRenlingByHomelessPetIdAndName" resultType="com.huang.entity.RenLing">
+        select * from petcenter.renling where homelesspet_id = #{homelesspetId} and name = #{name}
+    </select>
+    <select id="querrRenling" resultType="com.huang.entity.RenLing">
+        select * from petcenter.renling where homelesspet_id = #{homelesspetId} and renling_id = #{renlingId}
+    </select>
+    <select id="querryAdoptionBySuccess" resultType="java.lang.Integer">
+        select id from petcenter.renling where success = 1 and user_id = #{userId}
+    </select>
+    <select id="queryRenlingPage" resultType="com.huang.entity.RenLing">
+        select * from petcenter.renling ${ew.customSqlSegment}
+    </select>
+</mapper>
+

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huang.dao.MessageMapper">
+    <resultMap id="MessageResultMap" type="com.huang.entity.Message">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <result property="message" column="message"/>
+        <result property="time" column="time"/>
+        <result property="feedbackmessage" column="feedbackmessage"/>
+    </resultMap>
+    <insert id="insertMessage" parameterType="com.huang.entity.Adoption">
+        insert into petcenter.message(name,email,message,time) values (#{name},#{email},#{message},#{time})
+    </insert>
+    <update id="updateMessage">
+        update petcenter.message set feedbackmessage = #{feedbackmessage}  where name = #{name} and message = #{message1}
+    </update>
+    <delete id="deleteMessageById">
+        delete from petcenter.message where id = #{id}
+    </delete>
+    <select id="queryAllMessage" resultType="com.huang.entity.Message">
+        select * from petcenter.message
+    </select>
+    <select id="queryMessageById" resultType="com.huang.entity.Message">
+        select * from  petcenter.message where id = #{messageid}
+    </select>
+</mapper>
+

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huang.dao.AdoptionMapper">
+    <resultMap id="AdoptionResultMap" type="com.huang.entity.Adoption">
+        <id property="id" column="id"/>
+        <result property="address" column="address"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <result property="condit" column="condit"/>
+        <result property="blogtitle" column="blogtitle"/>
+        <result property="phoneId" column="phone_id"/>
+        <result property="qqId" column="qq_id"/>
+        <result property="wechatId" column="wechat_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="blogId" column="blog_id"/>
+        <result property="time" column="time"/>
+        <result property="adopterId" column="adopter_id"/>
+        <result property="success" column="success"/>
+        <association property="user" javaType="com.huang.entity.User">
+            <id property="id" column="id"/>
+            <result property="username" column="username"/>
+            <result property="password" column="password"/>
+            <result property="email" column="email"/>
+            <result property="sex" column="sex"/>
+            <result property="name" column="name"/>
+            <result property="phoneid" column="phoneid"/>
+            <result property="portrait" column="portrait"/>
+        </association>
+    </resultMap>
+    <insert id="insertAdoption" parameterType="com.huang.entity.Adoption">
+        insert into petcenter.adoption(name,address,email,phone_id,qq_id,wechat_id,blogtitle,condit,blog_id,user_id,adopter_id,success,time)
+        values (#{name},#{address},#{email},#{phoneId},#{qqId},#{wechatId},#{blogtitle},#{condit},#{blogId},#{userId},#{adopterId},#{success},#{time})
+    </insert>
+    <update id="updateAdoption">
+        update petcenter.adoption set success = #{success} ,time = #{time}  where blog_id = #{blogId}
+    </update>
+    <delete id="deleteAdoptionById">
+        delete  from petcenter.adoption where petcenter.adoption.id = #{id}
+    </delete>
+    <select id="querryAdoptionByUserId" resultType="com.huang.entity.Adoption" parameterType="list">
+        select * from petcenter.adoption where user_id = #{userId}
+    </select>
+    <select id="querryAdoptionByAdopterId" resultType="com.huang.entity.Adoption" parameterType="list">
+        select * from petcenter.adoption where adopter_id = #{adopterId}
+    </select>
+    <select id="queryAdoptionByBlogIdAndName" resultType="com.huang.entity.Adoption">
+        select * from petcenter.adoption where blog_id = #{blogId} and adoption.name = #{name}
+    </select>
+    <select id="querryAllAdoption" resultType="com.huang.entity.Adoption">
+        select * from petcenter.adoption
+    </select>
+    <select id="querryAdoptionByAdopterId1" resultType="com.huang.entity.Adoption">
+        select * from petcenter.adoption where adopter_id = #{adopterId} and success = 1
+    </select>
+    <select id="querryAdoption" resultType="com.huang.entity.Adoption">
+        select * from petcenter.adoption where blog_id = #{blogId} and adopter_id = #{adopterId}
+    </select>
+    <select id="querryAdoptionByBlogId" resultType="com.huang.entity.Adoption">
+        select *from petcenter.adoption where blog_id = #{blogId}
+    </select>
+    <select id="querryAdoptionBySuccess" resultType="java.lang.Integer" parameterType="list">
+        select id from petcenter.adoption where success = 1 and user_id =#{userId}
+    </select>
+    <select id="queryBlogPage" resultType="com.huang.entity.Adoption">
+        select * from petcenter.adoption ${ew.customSqlSegment}
+    </select>
+</mapper>
+

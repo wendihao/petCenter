@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huang.dao.UserUploadMapper">
+    <resultMap id="UserUploadResultMap" type="com.huang.entity.UserUpload">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="varieties" column="varieties"/>
+        <result property="category" column="category"/>
+        <result property="images" column="images"/>
+        <result property="time" column="time"/>
+        <result property="introduce" column="introduce"/>
+        <result property="animalId" column="animal_id"/>
+    </resultMap>
+    <insert id="saveUserUpload" parameterType="com.huang.entity.UserUpload">
+        insert into  petcenter.userupload ( user_id, username,varieties, category, images, time, introduce,animal_id)
+        values (#{userId},#{username},#{varieties},#{category},#{images},#{time},#{introduce},#{animalId})
+    </insert>
+    <delete id="deleteUploadById">
+        delete from userupload where id = #{id}
+    </delete>
+    <select id="queryUserUpload" resultType="com.huang.entity.UserUpload">
+        select * from petcenter.userupload ${ew.customSqlSegment}
+    </select>
+    <select id="queryUploadById" resultType="com.huang.entity.UserUpload">
+        select *from petcenter.userupload where id = #{id}
+    </select>
+</mapper>
+

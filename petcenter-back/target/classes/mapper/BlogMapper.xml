@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huang.dao.BlogMapper">
+    <resultMap id="BlogResultMap" type="com.huang.entity.Blog">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="introduce" column="introduce"/>
+        <result property="address" column="address"/>
+        <result property="images" column="images"/>
+        <result property="petname" column="petname"/>
+        <result property="petsex" column="petsex"/>
+        <result property="petage" column="petage"/>
+        <result property="petadopt" column="petadopt"/>
+        <result property="varieties" column="varieties"/>
+        <result property="free" column="free"/>
+        <result property="time" column="time"/>
+        <result property="userId" column="user_id"/>
+        <result property="schedule" column="schedule"/>
+        <result property="uuid" column="uuid"/>
+        <result property="adopterId" column="adopter_id"/>
+        <association property="user" javaType="com.huang.entity.User">
+            <id property="id" column="id"/>
+            <result property="username" column="username"/>
+            <result property="password" column="password"/>
+            <result property="email" column="email"/>
+            <result property="sex" column="sex"/>
+            <result property="name" column="name"/>
+            <result property="phoneid" column="phoneid"/>
+            <result property="portrait" column="portrait"/>
+        </association>
+    </resultMap>
+    <insert id="saveBlog" parameterType="com.huang.entity.Blog">
+        insert into petcenter.blog (title, introduce,address, images,petname,petsex,petage,petadopt,varieties,free,time,user_id,schedule,uuid)
+         VALUES (#{title},#{introduce},#{address},#{images},#{petname},#{petsex},#{petage},#{petadopt},#{varieties},#{free},#{time},#{userId},#{schedule},#{uuid})
+    </insert>
+    <update id="updateBlog">
+        update petcenter.blog set title=#{title},introduce=#{introduce},address=#{address},images=#{images},petname=#{petname},petsex=#{petsex},petage=#{petage},
+        petadopt=#{petadopt},varieties=#{varieties},free=#{free},time=#{time} ,adopter_Id=#{adopterId} where id =#{id}
+    </update>
+    <update id="updateBlogByUuid">
+        update petcenter.blog set schedule = 1 where uuid = #{animalId}
+    </update>
+    <update id="updateBlog1">
+        update petcenter.blog set adopter_id = #{adopterId} where id = #{blogId}
+    </update>
+    <update id="updateBlogByUuid1">
+        update petcenter.blog set title = #{title},address = #{address}, petname = #{petname} ,petsex =#{petsex},
+                                  petage =#{petage},varieties=#{varieties},free=#{free},introduce=#{introduce},images=#{images}
+                                  where uuid = #{uuid}
+    </update>
+    <select id="selectMyBlog" resultType="com.huang.entity.Blog" resultMap="BlogResultMap">
+        select * from petcenter.blog where schedule = 1
+    </select>
+    <select id="queryAllBlog" resultType="com.huang.entity.Blog">
+        select * from petcenter.blog
+    </select>
+    <select id="queryBlogById" resultType="com.huang.entity.Blog">
+        select * from petcenter.blog where blog.id = #{id}
+    </select>
+    <select id="queryBlogByUserId" resultType="com.huang.entity.Blog" parameterType="integer">
+        select * from petcenter.blog where blog.user_id = #{userid}
+    </select>
+    <select id="queryBlogByBlogId" resultType="com.huang.entity.Blog" parameterType="integer">
+        select * from petcenter.blog where blog.id = #{blogid}
+    </select>
+    <select id="queryBlogPage" resultType="com.huang.entity.Blog">
+        select * from petcenter.blog ${ew.customSqlSegment}
+    </select>
+    <select id="queryBlogByUserId1" resultType="com.huang.entity.Blog">
+        select * from petcenter.blog where blog.user_id != #{userid}
+    </select>
+    <select id="queryBlogByAddress" resultType="com.huang.entity.Blog">
+        select * from  petcenter.blog where blog.address = #{address}
+    </select>
+    <select id="querryBlog" resultType="com.huang.entity.Blog">
+        select * from petcenter.adoption where blog_id = #{blogId} and user_id = #{adopterId}
+    </select>
+    <select id="queryBlogByUuid" resultType="com.huang.entity.Blog">
+        select * from petcenter.blog where uuid = #{animalId}
+    </select>
+    <select id="queryAllSongYang" resultType="com.huang.entity.Blog">
+        select * from petcenter.blog where schedule = 1
+    </select>
+    <select id="queryAllBlogByAdopterId" resultType="com.huang.entity.Blog">
+        select * from petcenter.blog where adopter_id = #{adopterId}
+    </select>
+    <select id="queryAllBlogByuserId" resultType="com.huang.entity.Blog">
+        select * from petcenter.blog where user_id = #{userId}
+    </select>
+    <select id="getAdoptionNumByAdopterId" resultType="com.huang.entity.Blog">
+        select * from petcenter.blog where adopter_id = #{Id}
+    </select>
+    <select id="getSongYangNumByUserId" resultType="com.huang.entity.Blog">
+        select  * from petcenter.blog where user_id = #{Id}
+    </select>
+    <select id="queryAllSongYangByAddress" resultType="com.huang.entity.Blog">
+        select  * from petcenter.blog where address like #{address}
+    </select>
+</mapper>
+
