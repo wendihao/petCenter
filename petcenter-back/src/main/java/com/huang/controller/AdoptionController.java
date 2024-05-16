@@ -29,6 +29,7 @@ public class AdoptionController {
         java.sql.Date date1 = new java.sql.Date(date.getTime());
         adoption.setTime(date1);
         adoption.setSuccess(0);
+        System.out.println();
         int i = adoptionMapper.insertAdoption(adoption);
         Integer integer = blogMapper.updateBlog1(adoption.getAdopterId(), adoption.getBlogId());
         if (i > 0 && integer > 0) {
