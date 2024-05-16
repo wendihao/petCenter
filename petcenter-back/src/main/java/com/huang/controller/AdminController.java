@@ -74,6 +74,7 @@ public class AdminController {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             record.setDatetime(formatter.format(record.getTime()));
         }
+        System.out.println();
         return userUploadIPage;
     }
 
