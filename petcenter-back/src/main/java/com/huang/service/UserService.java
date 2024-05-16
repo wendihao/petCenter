@@ -15,6 +15,7 @@ public class UserService {
     public User queryUserByUserName(String username)
     {
         User user = userMapper.queryUserByUserName(username);
+        System.out.println();
         return user;
     }
 }

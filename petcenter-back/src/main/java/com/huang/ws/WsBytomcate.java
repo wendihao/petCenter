@@ -34,6 +34,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
     @OnOpen
     public void OnOpen(Session session,EndpointConfig config, @PathParam(value = "username") String username) throws JsonProcessingException {
+        System.out.println();
         this.session = session;
         HttpSession httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
         this.httpSession = httpSession;
