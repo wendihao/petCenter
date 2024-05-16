@@ -21,6 +21,7 @@ public class MessageUtils {
         MsgResult resultMessage = new MsgResult();
         resultMessage.setSystemMsgFlag(systemMsgFlag);
         resultMessage.setSendMsg(message);
+        System.out.println();
         if (!systemMsgFlag) {
             resultMessage.setFrom(from);
         }
